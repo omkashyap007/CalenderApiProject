@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HomePage</title>
+</head>
+
+<body>
+    <h1> HOMEPAGE </h1>
+    <hr>
+    <h2>
+    {{request.user}}
+    </h2>
+    <hr>
+    <a href = "{% url 'allow-calender-access' %}">Allow Calender Access </a>
+
+    <hr>
+</body>
+
+</html>

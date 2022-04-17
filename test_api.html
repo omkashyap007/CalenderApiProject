@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>
+        Testing the Room Api
+    </h1>
+
+    <button id = "id_allow_calendar_access">Allow Calendar Access </button>
+    
+  </body>
+
+  <script>
+
+    var allow_button = document.getElementById("id_allow_calendar_access") ;
+    allow_button.addEventListener("click" , allowAccess)
+
+
+    function allowAccess() {
+    console.log("The function was run") ; 
+
+    let allowCalenderAccess = async () =>{
+      let response = await fetch("http://localhost:8000/rest/v1/calendar/init/")
+      let result = await response.json()
+      console.log(result)
+      if(result[1] === "success"){
+          getCalendarData()
+      }
+
+    }
+    
+
+    let getCalendarData = async () =>{
+        let response = await fetch("http://localhost:8000/rest/v1/calendar/redirect/") ;
+        let result = await response.json() ;
+        console.log(result) ; 
+
+        if (result) {
+            document.getElementById("id_allow_calendar_access").style.display = "none" ;
+            
+            var container_div = document.createElement("div"); 
+            container_div.id = "container_div" ; 
+
+            for( let i = 0 ; i< result.length ; i++) {
+                var li = document.createElement("li") ; 
+                li.innerHTML = result[i];
+                container_div.prepend(li); 
+            }
+
+            var body = document.body ; 
+            body.appendChild(container_div) ; 
+            
+        }
+    }
+
+    allowCalenderAccess()
+}
+
+  </script>
+</html>
